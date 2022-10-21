@@ -1,5 +1,7 @@
-package Tuple;
+package Test;
 
+import Tuple.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,17 +28,17 @@ class TupleTest
     {
         //point should set value 'w' to 1.0
         Point point = new Point(4, -4, 3);
-        assertEquals(4.0, point.getX());
-        assertEquals(-4.0, point.getY());
-        assertEquals(3.0, point.getZ());
-        assertEquals(1.0, point.getW());
+        Assertions.assertEquals(4.0, point.getX());
+        Assertions.assertEquals(-4.0, point.getY());
+        Assertions.assertEquals(3.0, point.getZ());
+        Assertions.assertEquals(1.0, point.getW());
 
         //vector should set value 'w' to 0.0
         Vector vector = new Vector(4, -4, 3);
-        assertEquals(4.0, vector.getX());
-        assertEquals(-4.0, vector.getY());
-        assertEquals(3.0, vector.getZ());
-        assertEquals(0.0, vector.getW());
+        Assertions.assertEquals(4.0, vector.getX());
+        Assertions.assertEquals(-4.0, vector.getY());
+        Assertions.assertEquals(3.0, vector.getZ());
+        Assertions.assertEquals(0.0, vector.getW());
     }
 
     @Test
@@ -83,7 +85,7 @@ class TupleTest
     {
         Vector zeroVector = new Vector(0, 0, 0);
         Vector vector = new Vector(1, -2, 3);
-        assertEquals(zeroVector.subtract(vector), (Tuple) new Vector(-1, 2, -3));
+        Assertions.assertEquals(zeroVector.subtract(vector), (Tuple) new Vector(-1, 2, -3));
     }
 
     @Test
@@ -118,31 +120,31 @@ class TupleTest
     public void computingTheMagnitudeOfVector()
     {
         Vector vector = new Vector(1, 0, 0);
-        assertEquals(vector.magnitude(), 1);
+        Assertions.assertEquals(vector.magnitude(), 1);
         vector = new Vector(0, 1, 0);
-        assertEquals(vector.magnitude(), 1);
+        Assertions.assertEquals(vector.magnitude(), 1);
         vector = new Vector(0, 0, 1);
-        assertEquals(vector.magnitude(), 1);
+        Assertions.assertEquals(vector.magnitude(), 1);
         vector = new Vector(1, 2, 3);
-        assertEquals(vector.magnitude(), Math.sqrt(14));
+        Assertions.assertEquals(vector.magnitude(), Math.sqrt(14));
         vector = new Vector(-1, -2, -3);
-        assertEquals(vector.magnitude(), Math.sqrt(14));
+        Assertions.assertEquals(vector.magnitude(), Math.sqrt(14));
     }
 
     @Test
     public void normalizingVector()
     {
         Vector vector = new Vector(4, 0, 0);
-        assertEquals(vector.normalized(), new Vector(1, 0, 0));
+        Assertions.assertEquals(vector.normalized(), new Vector(1, 0, 0));
         vector = new Vector(1, 2, 3);
-        assertEquals(vector.normalized(), new Vector(1/Math.sqrt(14), 2/Math.sqrt(14), 3/Math.sqrt(14)));
+        Assertions.assertEquals(vector.normalized(), new Vector(1/Math.sqrt(14), 2/Math.sqrt(14), 3/Math.sqrt(14)));
     }
 
     @Test
     public void magnitudeOfANormalizedVector()
     {
         Vector vector = new Vector(1, 2, 3);
-        assertEquals(vector.normalized().magnitude(), 1);
+        Assertions.assertEquals(vector.normalized().magnitude(), 1);
     }
 
     @Test
@@ -150,7 +152,7 @@ class TupleTest
     {
         Vector firstVector = new Vector(1, 2, 3);
         Vector secondVector = new Vector(2, 3, 4);
-        assertEquals(firstVector.dot(secondVector), 20);
+        Assertions.assertEquals(firstVector.dot(secondVector), 20);
     }
 
     @Test
@@ -158,7 +160,7 @@ class TupleTest
     {
         Vector firstVector = new Vector(1, 2, 3);
         Vector secondVector = new Vector(2, 3, 4);
-        assertEquals(firstVector.cross(secondVector), new Vector(-1, 2, -1));
-        assertEquals(secondVector.cross(firstVector), new Vector(1, -2, 1));
+        Assertions.assertEquals(firstVector.cross(secondVector), new Vector(-1, 2, -1));
+        Assertions.assertEquals(secondVector.cross(firstVector), new Vector(1, -2, 1));
     }
 }

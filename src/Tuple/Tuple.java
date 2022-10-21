@@ -3,6 +3,7 @@ package Tuple;
 public class Tuple
 {
     //region private member
+    private static final double DELTA = 0.000001;
     private final double x;
     private final double y;
     private final double z;
@@ -108,10 +109,11 @@ public class Tuple
         {
             return false;
         }
-        return this.getX() == ((Tuple)tuple).getX()
-                && this.getY() == ((Tuple)tuple).getY()
-                && this.getZ() == ((Tuple)tuple).getZ()
-                && this.getW() == ((Tuple)tuple).getW();
+
+        return Math.abs(this.getX() - ((Tuple)tuple).getX()) <= DELTA
+                && Math.abs(this.getY() - ((Tuple)tuple).getY()) <= DELTA
+                && Math.abs(this.getZ() - ((Tuple)tuple).getZ()) <= DELTA
+                && Math.abs(this.getW() - ((Tuple)tuple).getW()) <= DELTA;
     }
 
     public double magnitude()
