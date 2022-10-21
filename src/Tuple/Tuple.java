@@ -116,6 +116,12 @@ public class Tuple
                 && Math.abs(this.getW() - ((Tuple)tuple).getW()) <= DELTA;
     }
 
+    @Override
+    public String toString()
+    {
+        return "(X: " + this.getX() + ", Y: " + this.getY() + ", Z: " + this.getZ() + ", W: " + this.getW() + ")";
+    }
+
     public double magnitude()
     {
         return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w);

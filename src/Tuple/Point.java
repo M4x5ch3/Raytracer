@@ -6,4 +6,13 @@ public class Point extends Tuple
     {
         super(x, y, z, 1.0);
     }
+
+    @Override
+    public Point add(Tuple tuple)
+    {
+        return new Point(
+                this.getX() + tuple.getX(),
+                this.getY() + tuple.getY(),
+                this.getZ() + tuple.getZ());
+    }
 }

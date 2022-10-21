@@ -14,4 +14,23 @@ public class Vector extends Tuple
                 this.getZ() * vector.getX() - this.getX() * vector.getZ(),
                 this.getX() * vector.getY() - this.getY() * vector.getX());
     }
+
+    @Override
+    public Vector add(Tuple tuple)
+    {
+        return new Vector(
+                this.getX() + tuple.getX(),
+                this.getY() + tuple.getY(),
+                this.getZ() + tuple.getZ());
+    }
+
+    @Override
+    public Vector normalized()
+    {
+        double magnitude = this.magnitude();
+        return new Vector(
+                this.getX() / magnitude,
+                this.getY() / magnitude,
+                this.getZ() / magnitude);
+    }
 }
