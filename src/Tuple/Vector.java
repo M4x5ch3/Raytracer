@@ -15,13 +15,12 @@ public class Vector extends Tuple
                 this.getX() * vector.getY() - this.getY() * vector.getX());
     }
 
-    @Override
-    public Vector add(Tuple tuple)
+    public Vector add(Vector vector)
     {
         return new Vector(
-                this.getX() + tuple.getX(),
-                this.getY() + tuple.getY(),
-                this.getZ() + tuple.getZ());
+                this.getX() + vector.getX(),
+                this.getY() + vector.getY(),
+                this.getZ() + vector.getZ());
     }
 
     @Override
