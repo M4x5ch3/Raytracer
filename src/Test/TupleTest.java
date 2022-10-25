@@ -11,16 +11,16 @@ class TupleTest
     public void tupleIsAPoint()
     {
         Tuple tuple = new Tuple(4.3, -4.2, 3.1, 1.0);
-        assertEquals(tuple, (Tuple) new Point(4.3, -4.2, 3.1));
-        assertNotEquals(tuple, (Tuple) new Vector(4.3, -4.2, 3.1));
+        assertEquals(tuple, new Point(4.3, -4.2, 3.1));
+        assertNotEquals(tuple, new Vector(4.3, -4.2, 3.1));
     }
 
     @Test
     public void tupleIsAVector()
     {
         Tuple tuple = new Tuple(4.3, -4.2, 3.1, 0.0);
-        assertEquals(tuple, (Tuple) new Vector(4.3, -4.2, 3.1));
-        assertNotEquals(tuple, (Tuple) new Point(4.3, -4.2, 3.1));
+        assertEquals(tuple, new Vector(4.3, -4.2, 3.1));
+        assertNotEquals(tuple, new Point(4.3, -4.2, 3.1));
     }
 
     @Test
