@@ -1,46 +1,37 @@
 package Tuple;
 
-public class Color
+public class Color extends Tuple
 {
-    private final double r;
-    private final double g;
-    private final double b;
-
     public double getR()
     {
-        return r;
+        return this.getX();
     }
 
     public double getG()
     {
-        return g;
+        return this.getY();
     }
 
     public double getB()
     {
-        return b;
+        return this.getZ();
     }
 
-    public Color(double r, double g, double b)
+    public double getA()
     {
-        this.r = r;
-        this.g = g;
-        this.b = b;
+        return this.getW();
     }
 
-    public Color subtract(Color color)
+    public Color(int r, int g, int b, int a)
     {
-        return new Color(
-                this.getR() - color.getR(),
-                this.getG() - color.getG(),
-                this.getB() - color.getB());
+        super(r, g, b, a);
     }
 
-    public Color multiply(Color color)
+    public int getRGBA()
     {
-        return new Color(
-                this.getR() * color.getR(),
-                this.getG() * color.getG(),
-                this.getB() * color.getB());
+        return (((int)this.getA() & 0xFF) << 24) +
+                (((int)this.getR() & 0xFF) << 16) +
+                (((int)this.getG() & 0xFF) << 8) +
+                ((int)this.getB() & 0xFF);
     }
 }
