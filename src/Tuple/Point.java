@@ -14,4 +14,12 @@ public class Point extends Tuple
                 this.getY() + vector.getY(),
                 this.getZ() + vector.getZ());
     }
+
+    public Vector subtract(Point point)
+    {
+        return new Vector(
+                this.getX() + point.getX(),
+                this.getY() + point.getY(),
+                this.getZ() + point.getZ());
+    }
 }
