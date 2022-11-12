@@ -22,9 +22,16 @@ public class Color extends Tuple
         return this.getW();
     }
 
-    public Color(int r, int g, int b, int a)
+    public Color(double r, double g, double b, double a)
     {
-        super(r, g, b, a);
+        super(normRGB(r), normRGB(g), normRGB(b),normRGB(a));
+    }
+
+    public int getRGB()
+    {
+        return (((int)this.getR() & 0xFF) << 16) +
+                (((int)this.getG() & 0xFF) << 8) +
+                ((int)this.getB() & 0xFF);
     }
 
     public int getRGBA()
@@ -33,5 +40,9 @@ public class Color extends Tuple
                 (((int)this.getR() & 0xFF) << 16) +
                 (((int)this.getG() & 0xFF) << 8) +
                 ((int)this.getB() & 0xFF);
+    }
+
+    private static double normRGB(double x){
+        return Math.min(255, Math.max(0, x));
     }
 }

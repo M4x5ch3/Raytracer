@@ -64,8 +64,8 @@ public class Raytracer
         {
             for(int y = 0; y < getCoordinateSystemY() * 2 + 1; y++)
             {
-                Color color = new Color(x, y, 0, 0);
-                image.setRGB(x, y, color.getRGBA());
+                Color color = new Color((x + 0.5)*255/(getCoordinateSystemX() * 2 + 1), (y + 0.5)*255/(getCoordinateSystemY() * 2 + 1), 0, 0);
+                image.setRGB(x, y, color.getRGB());
             }
         }
 
@@ -90,14 +90,15 @@ public class Raytracer
         {
             for(int y = getCoordinateSystemY() * -1; y <= getCoordinateSystemY(); y++)
             {
-                Ray ray = new Ray(this.getCamera(), new Point(Math.abs(x + 0.5), Math.abs(y + 0.5), 0)
-                        .subtract(this.getCamera()));
+                Ray ray = new Ray(this.getCamera(), new Vector(x + 0.5,
+                        y + 0.5,
+                        100));
                 Color color = new Color(
-                        (int)ray.getDirection().getX(),
-                        (int)ray.getDirection().getY(),
-                        (int)ray.getDirection().getZ(),
-                        (int)ray.getDirection().getW());
-                image.setRGB(x + getCoordinateSystemX(), y + getCoordinateSystemY(), color.getRGBA());
+                        Math.abs(ray.getDirection().getX()),
+                        Math.abs(ray.getDirection().getY()),
+                        Math.abs(ray.getDirection().getZ()),
+                        1);
+                image.setRGB(x + getCoordinateSystemX(), y + getCoordinateSystemY(), color.getRGB());
             }
         }
 
@@ -122,9 +123,14 @@ public class Raytracer
         {
             for(int y = getCoordinateSystemY() * -1; y <= getCoordinateSystemY(); y++)
             {
-                Ray ray = new Ray(this.getCamera(), new Point(Math.abs(x + 0.5), Math.abs(y + 0.5), 0)
+                Ray ray = new Ray(this.getCamera(), new Point(x + 0.5, y + 0.5, 0)
                         .subtract(this.getCamera()));
-                image.setRGB(x + getCoordinateSystemX(), y + getCoordinateSystemY(), (int)ray.getDirection().magnitude());
+                Color color = new Color(
+                        ray.getDirection().magnitude(),
+                        ray.getDirection().magnitude(),
+                        ray.getDirection().magnitude(),
+                        1);
+                image.setRGB(x + getCoordinateSystemX(), y + getCoordinateSystemY(), color.getRGB());
             }
         }
 
