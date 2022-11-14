@@ -78,11 +78,12 @@ public class Tuple
 
     public double dot(Tuple tuple)
     {
-        return (this.getX() * tuple.getX() +
-                this.getY() * tuple.getY() +
-                this.getZ() * tuple.getZ() +
-                this.getW() * tuple.getW());
+        return ((this.getX() * tuple.getX()) +
+                (this.getY() * tuple.getY()) +
+                (this.getZ() * tuple.getZ()) +
+                (this.getW() * tuple.getW()));
     }
+
     public Tuple negate()
     {
         return new Tuple(
@@ -100,6 +101,11 @@ public class Tuple
                 this.getY() / magnitude,
                 this.getZ() / magnitude,
                 this.getW() / magnitude);
+    }
+
+    public double magnitude()
+    {
+        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w);
     }
 
     @Override
@@ -122,8 +128,4 @@ public class Tuple
         return "(X: " + this.getX() + ", Y: " + this.getY() + ", Z: " + this.getZ() + ", W: " + this.getW() + ")";
     }
 
-    public double magnitude()
-    {
-        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w);
-    }
 }

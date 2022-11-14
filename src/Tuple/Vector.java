@@ -23,6 +23,14 @@ public class Vector extends Tuple
                 this.getZ() + vector.getZ());
     }
 
+    public Vector multiply(double scale)
+    {
+        return new Vector(
+                this.getX() * scale,
+                this.getY() * scale,
+                this.getZ() * scale);
+    }
+
     @Override
     public Vector normalized()
     {
