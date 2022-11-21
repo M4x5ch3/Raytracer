@@ -1,6 +1,8 @@
 package Raytracer;
 
 import Geometry.*;
+import Scene.Camera;
+import Scene.Scene;
 import Tuple.*;
 
 import javax.imageio.ImageIO;
@@ -197,4 +199,42 @@ public class Raytracer
         }
     }
     //endregion
+
+    public void createCameraIntersectImage(String path, Camera camera)
+    {
+        File outputFile = new File(path);
+        Sphere ball = new Sphere(new Point(0, 0, 0), 0.5);
+
+        BufferedImage image = new BufferedImage(camera.getWidth(), camera.getHeight(), BufferedImage.TYPE_INT_RGB);
+        for(int x = 0; x < camera.getWidth(); x++)
+        {
+            for(int y = 0; y < camera.getHeight(); y++)
+            {
+                Color color;
+                if(ball.intersect(camera.generateRay(x, y)))
+                {
+                    color = new Color(0, 0, 255, 0);
+                }
+                else
+                {
+                    color = new Color(255, 0, 0, 0);
+                }
+                image.setRGB(x, camera.getHeight() - y - 1, color.getRGB());
+            }
+        }
+
+        try
+        {
+            ImageIO.write(image, "png", outputFile);
+        }
+        catch(IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public boolean trace(Scene scene, Ray ray)
+    {
+        return scene.traceRay(ray);
+    }
 }

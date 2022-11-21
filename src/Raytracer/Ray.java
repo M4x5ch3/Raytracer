@@ -49,4 +49,12 @@ public class Ray
         this.origin = origin;
         this.direction = direction.normalized();
     }
+
+    public Ray(Ray ray)
+    {
+        this.origin = ray.getOrigin();
+        this.direction = ray.getDirection();
+        this.t = ray.getT();
+        this.hit = ray.getHit();
+    }
 }

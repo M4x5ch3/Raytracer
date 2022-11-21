@@ -7,5 +7,5 @@ public enum ImageMode
     LENGTH,
     INTERSECT,
     T_VALUE,
-    NORMAL
+    NORMAL,
 }
