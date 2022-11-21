@@ -79,10 +79,11 @@ public class App
                 if(raytracer.trace(testScene, ray))
                 {
                     intersectColor = new Color(0, 0, 255, 0);
-                    Vector normal = ray.getHit().normal(ray.getOrigin().add(ray.getDirection().multiply(ray.getT())));
-                    normalColor = new Color(Math.abs(normal.getX() * 100),
-                                    Math.abs(normal.getY() * 100),
-                                    Math.abs(normal.getZ() * 100),
+                    Vector normal = ray.getHit().normal(ray.getOrigin().add(ray.getDirection().multiply(ray.getT())))
+                            .normalized();
+                    normalColor = new Color(Math.abs(normal.getX() * 255),
+                                    Math.abs(normal.getY() * 255),
+                                    Math.abs(normal.getZ() * 255),
                                     Math.abs(normal.getW()));
                 }
                 else
