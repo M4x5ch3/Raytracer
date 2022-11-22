@@ -51,6 +51,6 @@ public class Sphere extends Geometry
 
     public Vector normal(Point hit)
     {
-        return center.subtract(hit);
+        return center.subtract(hit).normalized();
     }
 }
