@@ -163,4 +163,15 @@ class TupleTest
         Assertions.assertEquals(firstVector.cross(secondVector), new Vector(-1, 2, -1));
         Assertions.assertEquals(secondVector.cross(firstVector), new Vector(1, -2, 1));
     }
+
+    @Test
+    public void reflectionOfVector()
+    {
+        Vector vector = new Vector(1, -1, 0);
+        Vector normal = new Vector(0, 1, 0);
+        assertEquals(new Vector(1, 1, 0), vector.reflect(normal));
+        vector = new Vector(0, -1, 0);
+        normal = new Vector(Math.sqrt(2)/2, Math.sqrt(2)/2, 0);
+        assertEquals(new Vector(1, 0, 0), vector.reflect(normal));
+    }
 }

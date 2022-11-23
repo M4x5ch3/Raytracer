@@ -1,6 +1,7 @@
 package Scene;
 
 import Geometry.*;
+import LightSource.LightSource;
 import Raytracer.Ray;
 
 import com.google.gson.Gson;
@@ -13,7 +14,7 @@ public class Scene
 {
     private Camera camera;
     private HashSet<Geometry> geometries = new HashSet<Geometry>();
-    private HashSet<LightSources> lightSources = new HashSet<LightSources>();
+    private HashSet<LightSource> lightSources = new HashSet<LightSource>();
     private HashSet<Material> materials = new HashSet<Material>();
     private final Gson GSON = new GsonBuilder().registerTypeAdapter(Geometry.class, new GeometryAdapter()).create();
 
@@ -28,7 +29,7 @@ public class Scene
         return this.geometries;
     }
 
-    public HashSet<LightSources> getLightSources()
+    public HashSet<LightSource> getLightSources()
     {
         return this.lightSources;
     }
@@ -51,14 +52,14 @@ public class Scene
         this.geometries = geometries;
     }
 
-    public Scene(Camera camera, HashSet<Geometry> geometries, HashSet<LightSources> lightSources)
+    public Scene(Camera camera, HashSet<Geometry> geometries, HashSet<LightSource> lightSources)
     {
         this.camera = camera;
         this.geometries = geometries;
         this.lightSources = lightSources;
     }
 
-    public Scene(Camera camera, HashSet<Geometry> geometries, HashSet<LightSources> lightSources, HashSet<Material> materials)
+    public Scene(Camera camera, HashSet<Geometry> geometries, HashSet<LightSource> lightSources, HashSet<Material> materials)
     {
         this.camera = camera;
         this.geometries = geometries;

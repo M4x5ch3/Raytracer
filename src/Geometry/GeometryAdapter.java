@@ -1,37 +1,22 @@
 package Geometry;
 
 import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
 
-public class GeometryAdapter implements JsonDeserializer<Geometry>, JsonSerializer<Geometry>
+public class GeometryAdapter extends TypeAdapter<Geometry>
 {
-
     @Override
-    public JsonElement serialize(Geometry geometry, Type geometryType, JsonSerializationContext context)
+    public void write(JsonWriter jsonWriter, Geometry geometry) throws IOException
     {
-        JsonObject result = new JsonObject();
-        result.add("type", new JsonPrimitive(geometry.getClass().getSimpleName()));
-        result.add("properties", context.serialize(geometry, geometry.getClass()));
 
-        return result;
     }
 
     @Override
-    public Geometry deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-            throws JsonParseException
+    public Geometry read(JsonReader jsonReader) throws IOException
     {
-        JsonObject jsonObject = json.getAsJsonObject();
-        String type = jsonObject.get("type").getAsString();
-        JsonElement element = jsonObject.get("properties");
-
-        try
-        {
-            return context.deserialize(element, Class.forName("geometry." + type));
-        }
-        catch (ClassNotFoundException ex)
-        {
-            throw new JsonParseException("Unknown element type: " + type, ex);
-        }
+        return null;
     }
 }
