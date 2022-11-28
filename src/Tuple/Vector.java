@@ -2,7 +2,7 @@ package Tuple;
 
 public class Vector extends Tuple
     {
-    public Vector(double x, double y, double z)
+        public Vector(double x, double y, double z)
         {
             super(x, y, z, 0.0);
         }

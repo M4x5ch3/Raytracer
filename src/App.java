@@ -1,4 +1,6 @@
 import Geometry.Sphere;
+import LightSource.PointLightSource;
+import Material.Material;
 import Raytracer.*;
 import Scene.Camera;
 import Scene.Scene;
@@ -21,7 +23,7 @@ public class App
         //raytracer.createImage("E:\\SchnittBild.png", ImageMode.INTERSECT);
         //raytracer.createImage("E:\\T-Wert.png", ImageMode.T_VALUE);
         //raytracer.createImage("E:\\NormalenBild.png", ImageMode.NORMAL);
-
+        /*
         raytracer.createCameraIntersectImage("E:\\KameraSchnittBild.png", new Camera(
                 new Point(0, 0, -10),
                 new Point(0, 0, 0),
@@ -40,7 +42,14 @@ public class App
                 3.3,
                 600,
                 600));
+        */
 
+        //testSceneWithMultipleObjects(raytracer);
+        testSceneWithLightSource(raytracer);
+    }
+
+    private static void testSceneWithMultipleObjects(Raytracer raytracer)
+    {
         Scene testScene = new Scene(
                 new Camera(
                         new Point(0, 0, -10),
@@ -48,7 +57,6 @@ public class App
                         90,
                         960,
                         540));
-
         testScene.addGeometry(new Sphere(new Point(0, -66.8, 0), 60))
                 .addGeometry(new Sphere(new Point(0, 0, 0), 1))
                 .addGeometry(new Sphere(new Point(3, 0, 0), 1))
@@ -82,9 +90,9 @@ public class App
                     Vector normal = ray.getHit().normal(ray.getOrigin().add(ray.getDirection().multiply(ray.getT())))
                             .normalized();
                     normalColor = new Color(Math.abs(normal.getX() * 255),
-                                    Math.abs(normal.getY() * 255),
-                                    Math.abs(normal.getZ() * 255),
-                                    Math.abs(normal.getW()));
+                            Math.abs(normal.getY() * 255),
+                            Math.abs(normal.getZ() * 255),
+                            Math.abs(normal.getW()));
                 }
                 else
                 {
@@ -107,5 +115,67 @@ public class App
         }
 
         testScene.serializeScene("testScene");
+    }
+
+    private static void testSceneWithLightSource(Raytracer raytracer)
+    {
+        Scene testScene = new Scene(
+                new Camera(
+                        new Point(0, 0, -2),
+                        new Point(0, 0, 0),
+                        90,
+                        800,
+                        800));
+
+        testScene.addGeometry(
+                new Sphere(
+                        new Point(0, 0, 0),
+                        1,
+                        new Material(
+                                new Color(1, 0.2, 1, 0),
+                                0.1,
+                                0.9,
+                                0.9,
+                                200)));
+
+        testScene.addLightSource(
+                new PointLightSource(
+                        new Point(-10, 10, -10),
+                        new Color(1, 1, 1, 0),
+                        1));
+
+        File outputFile = new File("E:\\BeleuchtungBild.png");
+        BufferedImage image = new BufferedImage(
+                testScene.getCamera().getWidth(),
+                testScene.getCamera().getHeight(),
+                BufferedImage.TYPE_INT_RGB);
+
+        for(int x = 0; x < testScene.getCamera().getWidth(); x++)
+        {
+            for(int y = 0; y < testScene.getCamera().getHeight(); y++)
+            {
+                Ray ray = testScene.getCamera().generateRay(x, y);
+                raytracer.trace(testScene, ray);
+                Color color = raytracer.calculateDiffusePart(testScene, ray);
+                if(color != null)
+                {
+                    int rgb = color.getRGB();
+                    image.setRGB(x, testScene.getCamera().getHeight() - y - 1, color.getRGB());
+                }
+                else
+                {
+                    image.setRGB(x, testScene.getCamera().getHeight() - y - 1, new Color(0, 0, 1, 0).getRGB());
+                }
+            }
+        }
+
+        try
+        {
+            ImageIO.write(image, "png", outputFile);
+        }
+        catch(IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
 }

@@ -42,6 +42,10 @@ public class Ray
     {
         this.hit = hit;
     }
+    public Point getHitPoint()
+    {
+        return this.origin.add(this.direction.multiply(this.t));
+    }
     //endregion
 
     public Ray(Point origin, Vector direction)

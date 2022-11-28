@@ -2,6 +2,7 @@ package Scene;
 
 import Geometry.*;
 import LightSource.LightSource;
+import Material.Material;
 import Raytracer.Ray;
 
 import com.google.gson.Gson;
@@ -13,8 +14,8 @@ import java.util.HashSet;
 public class Scene
 {
     private Camera camera;
-    private HashSet<Geometry> geometries = new HashSet<Geometry>();
-    private HashSet<LightSource> lightSources = new HashSet<LightSource>();
+    private Geometry[] geometries = {};
+    private LightSource[] lightSources = {};
     private HashSet<Material> materials = new HashSet<Material>();
     private final Gson GSON = new GsonBuilder().registerTypeAdapter(Geometry.class, new GeometryAdapter()).create();
 
@@ -24,12 +25,12 @@ public class Scene
         return this.camera;
     }
 
-    public HashSet<Geometry> getGeometries()
+    public Geometry[] getGeometries()
     {
         return this.geometries;
     }
 
-    public HashSet<LightSource> getLightSources()
+    public LightSource[] getLightSources()
     {
         return this.lightSources;
     }
@@ -46,20 +47,20 @@ public class Scene
         this.camera = camera;
     }
 
-    public Scene(Camera camera, HashSet<Geometry> geometries)
+    public Scene(Camera camera, Geometry[] geometries)
     {
         this.camera = camera;
         this.geometries = geometries;
     }
 
-    public Scene(Camera camera, HashSet<Geometry> geometries, HashSet<LightSource> lightSources)
+    public Scene(Camera camera, Geometry[] geometries, LightSource[] lightSources)
     {
         this.camera = camera;
         this.geometries = geometries;
         this.lightSources = lightSources;
     }
 
-    public Scene(Camera camera, HashSet<Geometry> geometries, HashSet<LightSource> lightSources, HashSet<Material> materials)
+    public Scene(Camera camera, Geometry[] geometries, LightSource[] lightSources, HashSet<Material> materials)
     {
         this.camera = camera;
         this.geometries = geometries;
@@ -70,7 +71,25 @@ public class Scene
 
     public Scene addGeometry(Geometry geometry)
     {
-        this.geometries.add(geometry);
+        Geometry[] temp = new Geometry[this.geometries.length + 1];
+        for(int i = 0; i < this.geometries.length; i++)
+        {
+            temp[i] = this.geometries[i];
+        }
+        temp[this.geometries.length] = geometry;
+        this.geometries = temp;
+        return this;
+    }
+
+    public Scene addLightSource(LightSource lightSource)
+    {
+        LightSource[] temp = new LightSource[this.lightSources.length + 1];
+        for(int i = 0; i < this.lightSources.length; i++)
+        {
+            temp[i] = this.lightSources[i];
+        }
+        temp[this.lightSources.length] = lightSource;
+        this.lightSources = temp;
         return this;
     }
 
@@ -101,7 +120,7 @@ public class Scene
 
     public void serializeScene(String name){
         try {
-            FileWriter writer = new FileWriter("scenes/"+name+".json");
+            FileWriter writer = new FileWriter("scenes/"+ name +".json");
             writer.write(GSON.toJson(this));
             writer.close();
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package Geometry;
 
+import Material.Material;
 import Raytracer.Ray;
 import Tuple.*;
 
@@ -7,6 +8,7 @@ public class Sphere extends Geometry
 {
     private final Point center;
     private final double radius;
+    private Material material;
 
     public Point getCenter()
     {
@@ -18,10 +20,28 @@ public class Sphere extends Geometry
         return this.radius;
     }
 
+    public Material getMaterial()
+    {
+        return this.material;
+    }
+
     public Sphere(Point centre, double radius)
     {
         this.center = centre;
         this.radius = radius;
+        this.material = new Material(
+                new Color(1, 0.2, 1, 0),
+                0,
+                1,
+                0,
+                0);
+    }
+
+    public Sphere(Point center, double radius, Material material)
+    {
+        this.center = center;
+        this.radius = radius;
+        this.material = material;
     }
 
     public boolean intersect(Ray ray)
