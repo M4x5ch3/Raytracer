@@ -281,8 +281,8 @@ public class Raytracer
 
         Sphere sphere = (Sphere) ray.getHit();
         LightSource lightSource = scene.getLightSources()[0];
-        double angle =sphere.normal(ray.getHitPoint())
-                .dot(lightSource.getPosition().subtract(ray.getHitPoint()).normalized());
+        double angle = sphere.normal(ray.getHitPoint())
+                .dot(ray.getHitPoint().subtract(lightSource.getPosition()).normalized());
 
         return sphere.getMaterial().getColor()
                 .multiply(sphere.getMaterial().getDiffuseReflectionCoefficient())
