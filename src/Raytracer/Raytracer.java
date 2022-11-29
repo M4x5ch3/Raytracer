@@ -173,12 +173,12 @@ public class Raytracer
 
         if(sphere.intersect(ray))
         {
-            Color color = new Color(255, 255, ray.getT(), 1);
+            Color color = new Color(ray.getT(), ray.getT(), ray.getT(), 1);
             image.setRGB(x + getCoordinateSystemX(), y + getCoordinateSystemY(), color.getRGB());
         }
         else
         {
-            Color color = new Color(0, 255, 0, 1);
+            Color color = new Color(255, 255, 255, 1);
             image.setRGB(x + getCoordinateSystemX(), y + getCoordinateSystemY(), color.getRGB());
         }
     }
@@ -257,7 +257,7 @@ public class Raytracer
         //specular part
         Color thirdLightingColor = calculateSpecularPart(scene, ray);
 
-        return lightingColor.add(secondLightingColor).add(thirdLightingColor).normalized();
+        return lightingColor.add(secondLightingColor).add(thirdLightingColor);
     }
 
     public Color calculateAmbientPart(Scene scene, Ray ray)
@@ -302,8 +302,13 @@ public class Raytracer
         double angle = ray.getHitPoint().subtract(scene.getCamera().getPosition()).normalized()
                 .dot(lightSource.getPosition().subtract(ray.getHitPoint()).reflect(sphere.normal(ray.getHitPoint())).normalized());
 
-        return lightSource.getColor()
-                .multiply(sphere.getMaterial().getSpecularReflectionCoefficient())
-                .multiply(Math.pow(angle, sphere.getMaterial().getShininess()));
+        if(angle > 0)
+        {
+            return lightSource.getColor()
+                    .multiply(sphere.getMaterial().getSpecularReflectionCoefficient())
+                    .multiply(Math.pow(angle, sphere.getMaterial().getShininess()));
+        }
+
+        return new Color(0, 0, 0, 0);
     }
 }

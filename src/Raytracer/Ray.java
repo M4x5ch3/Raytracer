@@ -8,7 +8,7 @@ public class Ray
     //region private member
     private Point origin;
     private Vector direction;
-    private double t = Float.NaN;
+    private double t = Double.NaN;
     private Geometry hit = null;
     //endregion
 

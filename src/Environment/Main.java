@@ -17,6 +17,8 @@ public class Main
             System.out.println(projectile);
             projectile = tick(environment, projectile);
         }
+
+        System.out.println(projectile);
     }
 
     private static Projectile tick(Environment environment, Projectile projectile)

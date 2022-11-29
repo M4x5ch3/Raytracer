@@ -45,7 +45,8 @@ public class App
         */
 
         //testSceneWithMultipleObjects(raytracer);
-        testSceneWithLightSource(raytracer);
+        //testSceneWithLightSource(raytracer);
+        testSceneWithMultipleObjectsAndLightsource(raytracer);
     }
 
     private static void testSceneWithMultipleObjects(Raytracer raytracer)
@@ -144,7 +145,7 @@ public class App
                         new Color(1, 1, 1, 0),
                         1));
 
-        File outputFile = new File("E:\\BeleuchtungBild.png");
+        File outputFile = new File("./images/BeleuchtungBild.png");
         BufferedImage image = new BufferedImage(
                 testScene.getCamera().getWidth(),
                 testScene.getCamera().getHeight(),
@@ -156,7 +157,7 @@ public class App
             {
                 Ray ray = testScene.getCamera().generateRay(x, y);
                 raytracer.trace(testScene, ray);
-                Color color = raytracer.calculateDiffusePart(testScene, ray);
+                Color color = raytracer.calculateLighting(testScene, ray);
                 if(color != null)
                 {
                     int rgb = color.getRGB();
@@ -165,6 +166,96 @@ public class App
                 else
                 {
                     image.setRGB(x, testScene.getCamera().getHeight() - y - 1, new Color(0, 0, 1, 0).getRGB());
+                }
+            }
+        }
+
+        try
+        {
+            ImageIO.write(image, "png", outputFile);
+        }
+        catch(IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private static void testSceneWithMultipleObjectsAndLightsource(Raytracer raytracer)
+    {
+        Scene testScene = new Scene(
+                new Camera(
+                        new Point(0, 0, -10),
+                        new Point(0, 0, 0),
+                        90,
+                        960,
+                        540));
+
+        testScene.addGeometry(new Sphere(new Point(0, -66.8, 0), 60,
+                        new Material(new Color(0.6, 0.18, 0.18, 0),
+                                0,
+                                1,
+                                0.9,
+                                200)))
+                .addGeometry(new Sphere(new Point(0, 0, 0), 1,
+                        new Material(new Color(0.1, 1, 0.1, 0),
+                                0,
+                                1,
+                                0.9,
+                                200)))
+                .addGeometry(new Sphere(new Point(3, 0, 0), 1,
+                        new Material(new Color(0.6, 0.6, 0, 0),
+                                0,
+                                1,
+                                0.9,
+                                200)))
+                .addGeometry(new Sphere(new Point(-3, 0, 0), 1,
+                        new Material(new Color(0.6, 0.6, 0, 0),
+                                0,
+                                1,
+                                0.9,
+                                200)))
+                .addGeometry(new Sphere(new Point(-1.5, 2.25, 0), 2,
+                        new Material(new Color(1, 0, 1, 0),
+                                0,
+                                1,
+                                0.9,
+                                200)))
+                .addGeometry(new Sphere(new Point(1.5, 2.25, 0), 2,
+                        new Material(new Color(1, 0, 1, 0),
+                                0,
+                                1,
+                                0.9,
+                                200)));
+
+
+        testScene.addLightSource(
+                new PointLightSource(
+                        new Point(5, 3, -10),
+                        new Color(1, 1, 1, 0),
+                        1));
+
+        File outputFile = new File("./images/BeleuchtungMehrererObjekte.png");
+        BufferedImage image = new BufferedImage(
+                testScene.getCamera().getWidth(),
+                testScene.getCamera().getHeight(),
+                BufferedImage.TYPE_INT_RGB);
+
+        for(int x = 0; x < testScene.getCamera().getWidth(); x++)
+        {
+            for(int y = 0; y < testScene.getCamera().getHeight(); y++)
+            {
+                Ray ray = testScene.getCamera().generateRay(x, y);
+                raytracer.trace(testScene, ray);
+                Color color = raytracer.calculateLighting(testScene, ray);
+                if(color != null)
+                {
+                    int rgb = color.getRGB();
+                    image.setRGB(x, testScene.getCamera().getHeight() - y - 1, color.getRGB());
+                }
+                else
+                {
+                    image.setRGB(x, testScene.getCamera().getHeight() - y - 1,
+                            new Color(0.2, 0.2, 1, 0).getRGB());
                 }
             }
         }
