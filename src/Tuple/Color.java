@@ -2,6 +2,19 @@ package Tuple;
 
 public class Color extends Tuple
 {
+    //region default color values
+    public static Color SKY_BLUE = new Color(0, 0.49, 0.69);
+
+    public static Color GRASS_GREEN = new Color(0.31, 0.44, 0.22);
+
+    public static Color BLACK = new Color(0, 0, 0);
+
+    public static Color WHITE = new Color(1, 1, 1);
+
+    public static Color PINK = new Color(1, 0, 1);
+    //endregion
+
+    //region getter
     public double getR()
     {
         return this.getX();
@@ -20,6 +33,12 @@ public class Color extends Tuple
     public double getA()
     {
         return this.getW();
+    }
+    //endregion
+
+    public Color(double r, double g, double b)
+    {
+        super(r, g, b, 0);
     }
 
     public Color(double r, double g, double b, double a)

@@ -45,7 +45,7 @@ public class App
         */
 
         //testSceneWithMultipleObjects(raytracer);
-        //testSceneWithLightSource(raytracer);
+        testSceneWithLightSource(raytracer);
         testSceneWithMultipleObjectsAndLightsource(raytracer);
     }
 
@@ -66,13 +66,13 @@ public class App
                 .addGeometry(new Sphere(new Point(1.5, 2.25, 0), 2));
 
 
-        File firstOutputFile = new File("E:\\SzenenSchnittBild.png");
+        File firstOutputFile = new File("./images/SzenenSchnittBild.png");
         BufferedImage intersectImage = new BufferedImage(
                 testScene.getCamera().getWidth(),
                 testScene.getCamera().getHeight(),
                 BufferedImage.TYPE_INT_RGB);
 
-        File secondOutputFile = new File("E:\\SzenenNormalenBild.png");
+        File secondOutputFile = new File("./images/SzenenNormalenBild.png");
         BufferedImage normalImage = new BufferedImage(
                 testScene.getCamera().getWidth(),
                 testScene.getCamera().getHeight(),
@@ -137,12 +137,17 @@ public class App
                                 0.1,
                                 0.9,
                                 0.9,
-                                200)));
+                                200,
+                                false)));
 
         testScene.addLightSource(
                 new PointLightSource(
                         new Point(-10, 10, -10),
                         new Color(1, 1, 1, 0),
+                        1))
+                .addLightSource(new PointLightSource(
+                        new Point(10, -10, 10),
+                        new Color(1, 1, 1),
                         1));
 
         File outputFile = new File("./images/BeleuchtungBild.png");
@@ -195,37 +200,43 @@ public class App
                                 0,
                                 1,
                                 0.9,
-                                200)))
+                                200,
+                                false)))
                 .addGeometry(new Sphere(new Point(0, 0, 0), 1,
                         new Material(new Color(0.1, 1, 0.1, 0),
                                 0,
                                 1,
                                 0.9,
-                                200)))
+                                200,
+                                false)))
                 .addGeometry(new Sphere(new Point(3, 0, 0), 1,
                         new Material(new Color(0.6, 0.6, 0, 0),
                                 0,
                                 1,
                                 0.9,
-                                200)))
+                                200,
+                                false)))
                 .addGeometry(new Sphere(new Point(-3, 0, 0), 1,
                         new Material(new Color(0.6, 0.6, 0, 0),
                                 0,
                                 1,
                                 0.9,
-                                200)))
+                                200,
+                                false)))
                 .addGeometry(new Sphere(new Point(-1.5, 2.25, 0), 2,
                         new Material(new Color(1, 0, 1, 0),
                                 0,
                                 1,
                                 0.9,
-                                200)))
+                                200,
+                                false)))
                 .addGeometry(new Sphere(new Point(1.5, 2.25, 0), 2,
                         new Material(new Color(1, 0, 1, 0),
                                 0,
                                 1,
                                 0.9,
-                                200)));
+                                200,
+                                false)));
 
 
         testScene.addLightSource(

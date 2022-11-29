@@ -2,45 +2,27 @@ package Material;
 
 import Tuple.Color;
 
-public class Material
+public record Material(
+        Color color,
+        double ambientReflectionCoefficient,
+        double diffuseReflectionCoefficient,
+        double specularReflectionCoefficient,
+        double shininess,
+        boolean isMetallic)
 {
-    private Color color;
-    private double ambientReflectionCoefficient;
-    private double diffuseReflectionCoefficient;
-    private double specularReflectionCoefficient;
-    private double shininess;
+    public static Material DEFAULT_NON_METALLIC = new Material(
+            new Color(1, 0, 1, 0),
+            0,
+            1,
+            0,
+            0,
+            false);
 
-    public Color getColor()
-    {
-        return this.color;
-    }
-
-    public double getAmbientReflectionCoefficient()
-    {
-        return this.ambientReflectionCoefficient;
-    }
-
-    public double getDiffuseReflectionCoefficient()
-    {
-        return this.diffuseReflectionCoefficient;
-    }
-
-    public double getSpecularReflectionCoefficient()
-    {
-        return this.specularReflectionCoefficient;
-    }
-
-    public double getShininess()
-    {
-        return this.shininess;
-    }
-
-    public Material(Color color, double ambientReflectionCoefficient, double diffuseReflectionCoefficient, double specularReflectionCoefficient, double shininess)
-    {
-        this.color = color;
-        this.ambientReflectionCoefficient = ambientReflectionCoefficient;
-        this.diffuseReflectionCoefficient = diffuseReflectionCoefficient;
-        this.specularReflectionCoefficient = specularReflectionCoefficient;
-        this.shininess = shininess;
-    }
+    public static Material DEFAULT_METALLIC = new Material(
+            new Color(1, 0, 1, 0),
+            0,
+            1,
+            0,
+            0,
+            true);
 }

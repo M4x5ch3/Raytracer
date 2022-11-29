@@ -1,7 +1,7 @@
 package Raytracer;
 
 import Geometry.*;
-import LightSource.LightSource;
+import LightSource.Lighting;
 import Scene.Camera;
 import Scene.Scene;
 import Tuple.*;
@@ -241,74 +241,6 @@ public class Raytracer
 
     public Color calculateLighting(Scene scene, Ray ray)
     {
-        if(ray.getHit() == null)
-        {
-            return null;
-        }
-
-        //ambient part
-        Sphere sphere = (Sphere) ray.getHit();
-        Color lightingColor = calculateAmbientPart(scene, ray);
-
-        //diffuse part
-        LightSource lightSource = scene.getLightSources()[0];
-        Color secondLightingColor = calculateDiffusePart(scene, ray);
-
-        //specular part
-        Color thirdLightingColor = calculateSpecularPart(scene, ray);
-
-        return lightingColor.add(secondLightingColor).add(thirdLightingColor);
-    }
-
-    public Color calculateAmbientPart(Scene scene, Ray ray)
-    {
-        if(ray.getHit() == null)
-        {
-            return null;
-        }
-
-        Sphere sphere = (Sphere) ray.getHit();
-        return sphere.getMaterial().getColor()
-                .multiply(sphere.getMaterial().getAmbientReflectionCoefficient());
-    }
-
-    public Color calculateDiffusePart(Scene scene, Ray ray)
-    {
-        if(ray.getHit() == null)
-        {
-            return null;
-        }
-
-        Sphere sphere = (Sphere) ray.getHit();
-        LightSource lightSource = scene.getLightSources()[0];
-        double angle = sphere.normal(ray.getHitPoint())
-                .dot(ray.getHitPoint().subtract(lightSource.getPosition()).normalized());
-
-        return sphere.getMaterial().getColor()
-                .multiply(sphere.getMaterial().getDiffuseReflectionCoefficient())
-                .multiply(lightSource.getColor().multiply(lightSource.getIntensity()).multiply(angle));
-    }
-
-    public Color calculateSpecularPart(Scene scene, Ray ray)
-    {
-        if(ray.getHit() == null)
-        {
-            return null;
-        }
-
-        Sphere sphere = (Sphere) ray.getHit();
-        LightSource lightSource = scene.getLightSources()[0];
-
-        double angle = ray.getHitPoint().subtract(scene.getCamera().getPosition()).normalized()
-                .dot(lightSource.getPosition().subtract(ray.getHitPoint()).reflect(sphere.normal(ray.getHitPoint())).normalized());
-
-        if(angle > 0)
-        {
-            return lightSource.getColor()
-                    .multiply(sphere.getMaterial().getSpecularReflectionCoefficient())
-                    .multiply(Math.pow(angle, sphere.getMaterial().getShininess()));
-        }
-
-        return new Color(0, 0, 0, 0);
+        return Lighting.calculateLighting(scene, ray);
     }
 }

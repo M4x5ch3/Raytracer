@@ -6,9 +6,9 @@ import Tuple.*;
 
 public class Sphere extends Geometry
 {
-    private final Point center;
-    private final double radius;
-    private Material material;
+    Point center;
+    double radius;
+    Material material;
 
     public Point getCenter()
     {
@@ -29,12 +29,7 @@ public class Sphere extends Geometry
     {
         this.center = centre;
         this.radius = radius;
-        this.material = new Material(
-                new Color(1, 0.2, 1, 0),
-                0,
-                1,
-                0,
-                0);
+        this.material = Material.DEFAULT_NON_METALLIC;
     }
 
     public Sphere(Point center, double radius, Material material)
