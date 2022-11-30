@@ -1,4 +1,4 @@
-package Material;
+package Raytracer;
 
 import Tuple.Color;
 

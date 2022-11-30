@@ -1,8 +1,8 @@
-package Scene;
+package Raytracer.Scene;
 
-import Geometry.*;
-import LightSource.LightSource;
-import Material.Material;
+import Raytracer.Geometry.*;
+import Raytracer.LightSource.LightSource;
+import Raytracer.Material;
 import Raytracer.Ray;
 
 import com.google.gson.Gson;

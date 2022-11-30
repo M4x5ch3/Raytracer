@@ -1,16 +1,17 @@
-package LightSource;
+package Raytracer.LightSource;
 
-import Geometry.*;
+import Raytracer.Geometry.*;
 import Raytracer.Ray;
-import Scene.Scene;
+import Raytracer.Scene.Scene;
 import Tuple.Color;
+import Tuple.Vector;
 
 /**
  * Lighting class should only hold and provide methods to calculate the lighting in a scene.
  */
 public class Lighting
 {
-    public static Color calculateLighting(Scene scene, Ray ray)
+    public static Color calculateLightingPhong(Scene scene, Ray ray)
     {
         if(ray.getHit() == null)
         {
@@ -20,7 +21,23 @@ public class Lighting
         Sphere hit = (Sphere) ray.getHit();
         Color ambientColorPart = calculateAmbientPart(hit);
         Color diffuseColorPart = calculateDiffusePart(hit, ray, scene);
-        Color specularColorPart = calculateSpecularPart(hit, ray, scene);
+        Color specularColorPart = calculateSpecularPartPhong(hit, ray, scene);
+
+        return ambientColorPart.add(diffuseColorPart).add(specularColorPart);
+    }
+
+    public static Color calculateLightingBlinnPhong(Scene scene, Ray ray)
+    {
+        if(ray.getHit() == null)
+        {
+            return null;
+        }
+
+
+        Sphere hit = (Sphere) ray.getHit();
+        Color ambientColorPart = calculateAmbientPart(hit);
+        Color diffuseColorPart = calculateDiffusePart(hit, ray, scene);
+        Color specularColorPart = calculateSpecularPartBlinnPhong(hit, ray, scene);
 
         return ambientColorPart.add(diffuseColorPart).add(specularColorPart);
     }
@@ -50,7 +67,7 @@ public class Lighting
         return result;
     }
 
-    private static Color calculateSpecularPart(Sphere hit, Ray ray, Scene scene)
+    private static Color calculateSpecularPartPhong(Sphere hit, Ray ray, Scene scene)
     {
         Color result = new Color(0, 0, 0);
         for(LightSource lightSource : scene.getLightSources())
@@ -63,16 +80,49 @@ public class Lighting
             {
                 if(hit.getMaterial().isMetallic())
                 {
-                    result = result.add(lightSource.getColor().multiply(hit.getMaterial().color())
+                    result = result.add(lightSource.getColor()
+                            .multiply(lightSource.getIntensity())
+                            .multiply(hit.getMaterial().color())
                             .multiply(hit.getMaterial().specularReflectionCoefficient())
                             .multiply(Math.pow(angle, hit.getMaterial().shininess())));
                 }
                 else
                 {
                     result = result.add(lightSource.getColor()
+                            .multiply(lightSource.getIntensity())
                             .multiply(hit.getMaterial().specularReflectionCoefficient())
                             .multiply(Math.pow(angle, hit.getMaterial().shininess())));
                 }
+            }
+        }
+
+        return result;
+    }
+
+    private static Color calculateSpecularPartBlinnPhong(Sphere hit, Ray ray, Scene scene)
+    {
+        Color result = new Color(0, 0, 0);
+        for(LightSource lightSource : scene.getLightSources())
+        {
+            Vector h = scene.getCamera().getPosition().subtract(ray.getHitPoint()).normalized()
+                    .add(lightSource.getPosition().subtract(ray.getHitPoint()).normalized()).normalized();
+
+            double angle = hit.normal(ray.getHitPoint()).dot(h);
+
+            if(hit.getMaterial().isMetallic())
+            {
+                result = result.add(lightSource.getColor()
+                        .multiply(lightSource.getIntensity())
+                        .multiply(hit.getMaterial().color())
+                        .multiply(hit.getMaterial().specularReflectionCoefficient())
+                        .multiply(Math.pow(angle, 4 * hit.getMaterial().shininess())));
+            }
+            else
+            {
+                result = result.add(lightSource.getColor()
+                        .multiply(lightSource.getIntensity())
+                        .multiply(hit.getMaterial().specularReflectionCoefficient())
+                        .multiply(Math.pow(angle, 4 * hit.getMaterial().shininess())));
             }
         }
 

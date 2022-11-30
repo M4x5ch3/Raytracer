@@ -1,4 +1,4 @@
-package LightSource;
+package Raytracer.LightSource;
 
 import Tuple.Color;
 import Tuple.Point;

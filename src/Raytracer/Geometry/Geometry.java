@@ -1,6 +1,5 @@
-package Geometry;
+package Raytracer.Geometry;
 
-import Material.Material;
 import Raytracer.Ray;
 import Tuple.*;
 

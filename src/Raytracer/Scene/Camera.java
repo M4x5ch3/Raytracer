@@ -1,4 +1,4 @@
-package Scene;
+package Raytracer.Scene;
 
 import Raytracer.Ray;
 import Tuple.Point;
@@ -87,7 +87,13 @@ public class Camera
         this.up = viewPlaneNormal.cross(right).normalized();
     }
 
-    public Ray generateRay(int pixelX, int pixelY)
+    /**
+     * Creates ray which is created through the pixels center.
+     * @param pixelX Coordinate X
+     * @param pixelY Coordinate Y
+     * @return generated ray
+     */
+    public Ray generateRay(double pixelX, double pixelY)
     {
         double xOffset = (pixelX + 0.5 - (this.width / 2)) * this.pixelSize;
         double yOffset = (pixelY + 0.5 - (this.height / 2)) * this.pixelSize;

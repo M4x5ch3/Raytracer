@@ -1,6 +1,6 @@
 package Raytracer;
 
-import Geometry.Geometry;
+import Raytracer.Geometry.Geometry;
 import Tuple.*;
 
 public class Ray

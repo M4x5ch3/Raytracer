@@ -1,4 +1,4 @@
-package Geometry;
+package Raytracer.Geometry;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
