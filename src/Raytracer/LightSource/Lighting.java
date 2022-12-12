@@ -33,8 +33,7 @@ public class Lighting
             return null;
         }
 
-
-        Sphere hit = (Sphere) ray.getHit();
+        Geometry hit = ray.getHit();
         Color ambientColorPart = calculateAmbientPart(hit);
         Color diffuseColorPart = calculateDiffusePart(hit, ray, scene);
         Color specularColorPart = calculateSpecularPartBlinnPhong(hit, ray, scene);
@@ -42,13 +41,13 @@ public class Lighting
         return ambientColorPart.add(diffuseColorPart).add(specularColorPart);
     }
 
-    private static Color calculateAmbientPart(Sphere hit)
+    private static Color calculateAmbientPart(Geometry hit)
     {
         return hit.getMaterial().color()
                 .multiply(hit.getMaterial().ambientReflectionCoefficient());
     }
 
-    private static Color calculateDiffusePart(Sphere hit, Ray ray, Scene scene)
+    private static Color calculateDiffusePart(Geometry hit, Ray ray, Scene scene)
     {
         Color result = new Color(0, 0, 0);
         for(LightSource lightSource : scene.getLightSources())
@@ -60,14 +59,14 @@ public class Lighting
             {
                 result = result.add(hit.getMaterial().color()
                         .multiply(hit.getMaterial().diffuseReflectionCoefficient())
-                        .multiply(lightSource.getColor().multiply(lightSource.getIntensity()).multiply(angle)));
+                        .multiply(lightSource.colorAtPoint(ray.getHitPoint())).multiply(angle));
             }
         }
 
         return result;
     }
 
-    private static Color calculateSpecularPartPhong(Sphere hit, Ray ray, Scene scene)
+    private static Color calculateSpecularPartPhong(Geometry hit, Ray ray, Scene scene)
     {
         Color result = new Color(0, 0, 0);
         for(LightSource lightSource : scene.getLightSources())
@@ -99,7 +98,7 @@ public class Lighting
         return result;
     }
 
-    private static Color calculateSpecularPartBlinnPhong(Sphere hit, Ray ray, Scene scene)
+    private static Color calculateSpecularPartBlinnPhong(Geometry hit, Ray ray, Scene scene)
     {
         Color result = new Color(0, 0, 0);
         for(LightSource lightSource : scene.getLightSources())

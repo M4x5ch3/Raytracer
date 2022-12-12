@@ -18,8 +18,8 @@ public class App
     {
         Raytracer raytracer = new Raytracer(500, 500, 500);
         //testSceneWithMultipleObjects(raytracer);
-        testSceneWithLightSource(raytracer);
-        //testSceneWithMultipleObjectsAndLightsource(raytracer);
+        //testSceneWithLightSource(raytracer);
+        testSceneWithMultipleObjectsAndLightsource(raytracer);
     }
 
     private static void testSceneWithMultipleObjects(Raytracer raytracer)
@@ -180,6 +180,11 @@ public class App
                 new PointLightSource(
                         new Point(5, 3, -10),
                         new Color(1, 1, 1, 0),
+                        1))
+                .addLightSource(
+                new PointLightSource(
+                        new Point(-5, 3, -10),
+                        new Color(1, 1, 1),
                         1));
 
         File outputFile = new File("./images/BeleuchtungMehrererObjekte.png");

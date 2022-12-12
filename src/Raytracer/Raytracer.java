@@ -118,12 +118,19 @@ public class Raytracer
 
                 if(lighting != null)
                 {
-                    color = color.add(lighting);
+                    color = color.add(new Color(lighting.getR() / 9, lighting.getG() / 9, lighting.getB() / 9));
+                }
+                else
+                {
+                    color = color.add(new Color(
+                            Color.SKY_BLUE.getR() / 9,
+                            Color.SKY_BLUE.getG() / 9,
+                            Color.SKY_BLUE.getB() / 9));
                 }
             }
         }
 
-        return new Color(color.getR() / 9, color.getG() / 9, color.getB() / 9);
+        return new Color(color.getR(), color.getG(), color.getB());
     }
 
     public boolean trace(Scene scene, Ray ray)

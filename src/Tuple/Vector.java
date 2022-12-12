@@ -49,6 +49,14 @@ public class Vector extends Tuple
                     this.getZ() / magnitude);
         }
 
+        public Vector negate()
+        {
+            return new Vector(
+                    this.getX() * -1,
+                    this.getY() * -1,
+                    this.getZ() * -1);
+        }
+
         public Vector reflect(Vector normal)
         {
             return this.subtract(normal.multiply(2 * this.dot(normal)));
