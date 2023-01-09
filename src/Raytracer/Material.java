@@ -8,7 +8,8 @@ public record Material(
         double diffuseReflectionCoefficient,
         double specularReflectionCoefficient,
         double shininess,
-        boolean isMetallic)
+        boolean isMetallic,
+        double reflectivity)
 {
     public static Material DEFAULT_NON_METALLIC = new Material(
             new Color(1, 0, 1, 0),
@@ -16,7 +17,8 @@ public record Material(
             1,
             0,
             0,
-            false);
+            false,
+            0);
 
     public static Material DEFAULT_METALLIC = new Material(
             new Color(1, 0, 1, 0),
@@ -24,5 +26,6 @@ public record Material(
             1,
             0,
             0,
-            true);
+            true,
+            0);
 }

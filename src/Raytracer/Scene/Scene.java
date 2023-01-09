@@ -93,6 +93,11 @@ public class Scene
         return this;
     }
 
+    /**
+     *
+     * @param ray
+     * @return true if ray hits an object
+     */
     public boolean traceRay(Ray ray)
     {
         for(Geometry geometry : this.geometries)

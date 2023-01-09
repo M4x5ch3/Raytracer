@@ -1,4 +1,6 @@
+import Raytracer.Geometry.Plane;
 import Raytracer.Geometry.Sphere;
+import Raytracer.LightSource.DirectionalLightSource;
 import Raytracer.LightSource.PointLightSource;
 import Raytracer.Material;
 import Raytracer.*;
@@ -19,7 +21,8 @@ public class App
         Raytracer raytracer = new Raytracer(500, 500, 500);
         //testSceneWithMultipleObjects(raytracer);
         //testSceneWithLightSource(raytracer);
-        testSceneWithMultipleObjectsAndLightsource(raytracer);
+        //testSceneWithMultipleObjectsAndLightsource(raytracer);
+        testSceneWithMulipleObjectsAndDirectionalLightsource(raytracer);
     }
 
     private static void testSceneWithMultipleObjects(Raytracer raytracer)
@@ -111,13 +114,14 @@ public class App
                                 0.9,
                                 0.9,
                                 200,
-                                false)));
+                                false,
+                                0.5)));
 
         testScene.addLightSource(
                 new PointLightSource(
-                        new Point(-10, 10, -10),
+                        new Point(-10, 10, -1),
                         new Color(1, 1, 1),
-                        1));
+                        1000));
 
         raytracer.pictureScene(testScene);
     }
@@ -138,88 +142,120 @@ public class App
                                 1,
                                 0.9,
                                 200,
-                                false)))
+                                false,
+                                0)))
                 .addGeometry(new Sphere(new Point(0, 0, 0), 1,
                         new Material(new Color(0.1, 1, 0.1, 0),
                                 0,
                                 1,
                                 0.9,
                                 200,
-                                false)))
+                                false,
+                                0)))
                 .addGeometry(new Sphere(new Point(3, 0, 0), 1,
                         new Material(new Color(0.6, 0.6, 0, 0),
                                 0,
                                 1,
                                 0.9,
                                 200,
-                                false)))
+                                false,
+                                0)))
                 .addGeometry(new Sphere(new Point(-3, 0, 0), 1,
                         new Material(new Color(0.6, 0.6, 0, 0),
                                 0,
                                 1,
                                 0.9,
                                 200,
-                                false)))
+                                false,
+                                0)))
                 .addGeometry(new Sphere(new Point(-1.5, 2.25, 0), 2,
                         new Material(new Color(1, 0, 1, 0),
                                 0,
                                 1,
                                 0.9,
                                 200,
-                                false)))
+                                false,
+                                0.1)))
                 .addGeometry(new Sphere(new Point(1.5, 2.25, 0), 2,
                         new Material(new Color(1, 0, 1, 0),
                                 0,
                                 1,
                                 0.9,
                                 200,
-                                false)));
+                                false,
+                                0.1)));
 
 
         testScene.addLightSource(
                 new PointLightSource(
-                        new Point(5, 3, -10),
+                        new Point(10, 10, -10),
                         new Color(1, 1, 1, 0),
-                        1))
+                        1000))
                 .addLightSource(
                 new PointLightSource(
-                        new Point(-5, 3, -10),
+                        new Point(-10, 10, -10),
                         new Color(1, 1, 1),
-                        1));
+                        1000));
 
-        File outputFile = new File("./images/BeleuchtungMehrererObjekte.png");
-        BufferedImage image = new BufferedImage(
-                testScene.getCamera().getWidth(),
-                testScene.getCamera().getHeight(),
-                BufferedImage.TYPE_INT_RGB);
+        raytracer.pictureScene(testScene);
+    }
 
-        for(int x = 0; x < testScene.getCamera().getWidth(); x++)
-        {
-            for(int y = 0; y < testScene.getCamera().getHeight(); y++)
-            {
-                Ray ray = testScene.getCamera().generateRay(x, y);
-                raytracer.trace(testScene, ray);
-                Color color = raytracer.calculateLighting(testScene, ray);
-                if(color != null)
-                {
-                    int rgb = color.getRGB();
-                    image.setRGB(x, testScene.getCamera().getHeight() - y - 1, color.getRGB());
-                }
-                else
-                {
-                    image.setRGB(x, testScene.getCamera().getHeight() - y - 1,
-                            new Color(0.2, 0.2, 1, 0).getRGB());
-                }
-            }
-        }
+    private static void testSceneWithMulipleObjectsAndDirectionalLightsource(Raytracer raytracer)
+    {
+        Scene testScene = new Scene(
+                new Camera(
+                        new Point(0, 0, -10),
+                        new Point(0, 0, 0),
+                        90,
+                        960,
+                        540));
 
-        try
-        {
-            ImageIO.write(image, "png", outputFile);
-        }
-        catch(IOException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+        testScene.addGeometry(
+                new Plane(
+                        new Vector(0, 1, 1),
+                        new Point(0, -8, 0),
+                        11,
+                        new Material(
+                                Color.WHITE,
+                                1,
+                                1,
+                                1,
+                                200,
+                                true,
+                                0
+                        ))
+        ).addGeometry(
+                new Sphere(
+                        new Point(0, 1, 0),
+                        1,
+                        new Material(
+                                Color.GRASS_GREEN,
+                                1,
+                                1,
+                                0.9,
+                                200,
+                                false,
+                                0.5))
+        ).addGeometry(
+                new Sphere(
+                        new Point(0, 2, 5),
+                        2,
+                        new Material(
+                                new Color(0.49, 0.001, 0.52),
+                                1,
+                                1,
+                                1,
+                                300,
+                                false,
+                                0.1
+                        )
+                )
+        );
+
+        testScene.addLightSource(
+                new DirectionalLightSource(new Vector(0, -10, 10), Color.WHITE, 0.1)
+        );
+
+        raytracer.pictureScene(testScene);
     }
 }

@@ -26,7 +26,7 @@ public abstract class LightSource
         return this.intensity;
     }
 
-    public boolean isDirectional() { return this.direction == null; }
+    public boolean isDirectional() { return this.direction != null; }
 
     public LightSource(Color color, double intensity)
     {
@@ -43,27 +43,9 @@ public abstract class LightSource
 
     public LightSource(Vector direction, Color color, double intensity)
     {
-        this.direction = direction;
-    }
-
-    private double distanceFromPoint(Point point)
-    {
-        if(this.isDirectional())
-        {
-            return Double.NaN;
-        }
-
-        return this.position.subtract(point).magnitude();
-    }
-
-    private Vector directionFromPoint(Point point)
-    {
-        if(this.isDirectional())
-        {
-            return this.direction.negate();
-        }
-
-        return this.position.subtract(point).normalized();
+        this.direction = direction.normalized();
+        this.color = color;
+        this.intensity = intensity;
     }
 
     public Color colorAtPoint(Point point)
@@ -74,6 +56,26 @@ public abstract class LightSource
         }
 
         return this.color.multiply(this.intensity)
-                .multiply(1 / this.distanceFromPoint(point) * this.distanceFromPoint(point));
+                .multiply(1 / (this.distanceFromPoint(point) * this.distanceFromPoint(point)));
+    }
+
+    public double distanceFromPoint(Point point)
+    {
+        if(this.isDirectional())
+        {
+            return Double.NaN;
+        }
+
+        return this.position.subtract(point).magnitude();
+    }
+
+    public Vector directionFromPoint(Point point)
+    {
+        if(this.isDirectional())
+        {
+            return this.direction.negate();
+        }
+
+        return this.position.subtract(point).normalized();
     }
 }
