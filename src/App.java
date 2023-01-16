@@ -175,7 +175,7 @@ public class App
                                 0.9,
                                 200,
                                 false,
-                                0.1)))
+                                0.5)))
                 .addGeometry(new Sphere(new Point(1.5, 2.25, 0), 2,
                         new Material(new Color(1, 0, 1, 0),
                                 0,
@@ -183,19 +183,19 @@ public class App
                                 0.9,
                                 200,
                                 false,
-                                0.1)));
+                                0.5)));
 
 
         testScene.addLightSource(
-                new PointLightSource(
-                        new Point(10, 10, -10),
-                        new Color(1, 1, 1, 0),
-                        1000))
+                        new PointLightSource(
+                                new Point(10, 10, -10),
+                                new Color(1, 1, 1, 0),
+                                100))
                 .addLightSource(
-                new PointLightSource(
-                        new Point(-10, 10, -10),
-                        new Color(1, 1, 1),
-                        1000));
+                        new PointLightSource(
+                                new Point(-10, 10, -10),
+                                new Color(1, 1, 1),
+                                100));
 
         raytracer.pictureScene(testScene);
     }
@@ -238,10 +238,10 @@ public class App
                                 0.5))
         ).addGeometry(
                 new Sphere(
-                        new Point(0, 2, 5),
+                        new Point(0, 4, 5),
                         2,
                         new Material(
-                                new Color(0.49, 0.001, 0.52),
+                                new Color(0.49, 0.2, 0.52),
                                 1,
                                 1,
                                 1,
@@ -253,7 +253,7 @@ public class App
         );
 
         testScene.addLightSource(
-                new DirectionalLightSource(new Vector(0, -10, 10), Color.WHITE, 0.1)
+                new DirectionalLightSource(new Vector(0, -10, 10), Color.WHITE, 0.01)
         );
 
         raytracer.pictureScene(testScene);

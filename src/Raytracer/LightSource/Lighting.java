@@ -99,16 +99,14 @@ public class Lighting
         {
             if(hit.getMaterial().isMetallic())
             {
-                result = result.add(lightSource.getColor()
-                        .multiply(lightSource.getIntensity())
+                result = result.add(lightSource.colorAtPoint(ray.getHitPoint())
                         .multiply(hit.getMaterial().color())
                         .multiply(hit.getMaterial().specularReflectionCoefficient())
                         .multiply(Math.pow(angle, hit.getMaterial().shininess())));
             }
             else
             {
-                result = result.add(lightSource.getColor()
-                        .multiply(lightSource.getIntensity())
+                result = result.add(lightSource.colorAtPoint(ray.getHitPoint())
                         .multiply(hit.getMaterial().specularReflectionCoefficient())
                         .multiply(Math.pow(angle, hit.getMaterial().shininess())));
             }

@@ -108,9 +108,9 @@ public class Raytracer
     private Color superSample(Scene scene, int pixelX, int pixelY)
     {
         Color color = Color.BLACK;
-        for(double x = -0.5; x < 0.5; x += 0.5)
+        for(double x = -0.5; x <= 0.5; x += 0.5)
         {
-            for(double y = -0.5; y < 0.5; y += 0.5)
+            for(double y = -0.5; y <= 0.5; y += 0.5)
             {
                 Ray ray = scene.getCamera().generateRay(pixelX + x, pixelY + y);
                 this.trace(scene, ray);
@@ -118,7 +118,8 @@ public class Raytracer
 
                 if(lighting != null)
                 {
-                    color = color.add(new Color(lighting.getR() / 9, lighting.getG() / 9, lighting.getB() / 9));
+                    color = color.add(
+                            new Color(lighting.getR() / 9, lighting.getG() / 9, lighting.getB() / 9));
                 }
                 else
                 {
